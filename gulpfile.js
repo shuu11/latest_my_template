@@ -12,12 +12,7 @@ const del = require("del");
 const browserSync = require("browser-sync");
 const autoprefixer = require("autoprefixer");
 const loadPlugins = require("gulp-load-plugins");
-const $ = loadPlugins(); //  postcss,purgecss,imagemin,plumber,sass,sass-glob,connect-php,notify,rename,clean-css,uglify,pug
-
-const paths = {
-	src: "./src",
-	dist: "./dist",
-};
+const $ = loadPlugins(); //  postcss,purgecss,imagemin,plumber,sass,sass-glob,connect-php,notify,rename,clean-css,uglify
 
 //  clean
 const clean = {
