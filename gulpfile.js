@@ -12,7 +12,12 @@ const del = require("del");
 const browserSync = require("browser-sync");
 const autoprefixer = require("autoprefixer");
 const loadPlugins = require("gulp-load-plugins");
-const $ = loadPlugins(); //  postcss,purgecss,imagemin,plumber,sass,sass-glob,connect-php,notify,rename,clean-css,uglify
+const $ = loadPlugins(); //  postcss,purgecss,imagemin,plumber,sass,sass-glob,connect-php,notify,rename,clean-css,uglify,changed,diff-build
+
+const paths = {
+	src: "./src",
+	dist: "./dist",
+};
 
 //  clean
 const clean = {
@@ -97,6 +102,7 @@ gulp.task("copy", function (done) {
 gulp.task("minify", function (done) {
 	gulp
 		.src(minify.css.src)
+		.pipe($.changed(minify.css.dest))
 		.pipe($.plumber())
 		.pipe($.purgecss({ content: minify.content }))
 		.pipe($.cleanCss())
@@ -104,6 +110,7 @@ gulp.task("minify", function (done) {
 
 	gulp
 		.src(minify.fontawesome.src)
+		.pipe($.changed(minify.fontawesome.dest))
 		.pipe($.plumber())
 		.pipe($.purgecss({ content: minify.content }))
 		.pipe($.cleanCss())
@@ -111,6 +118,7 @@ gulp.task("minify", function (done) {
 
 	gulp
 		.src(minify.swiper.src)
+		.pipe($.changed(minify.swiper.dest))
 		.pipe($.plumber())
 		.pipe($.purgecss({ content: minify.content }))
 		.pipe($.cleanCss())
@@ -118,6 +126,7 @@ gulp.task("minify", function (done) {
 
 	gulp
 		.src(minify.tailwind.src)
+		.pipe($.changed(minify.tailwind.dest))
 		.pipe($.plumber())
 		.pipe(
 			$.purgecss({
@@ -128,9 +137,18 @@ gulp.task("minify", function (done) {
 		.pipe($.cleanCss())
 		.pipe(gulp.dest(minify.tailwind.dest));
 
-	gulp.src(minify.js.src).pipe($.plumber()).pipe($.uglify()).pipe(gulp.dest(minify.js.dest));
+	gulp
+		.src(minify.js.src)
+		.pipe($.changed(minify.js.dest))
+		.pipe($.plumber())
+		.pipe($.uglify())
+		.pipe(gulp.dest(minify.js.dest));
 
-	gulp.src(minify.image.src).pipe($.imagemin()).pipe(gulp.dest(minify.image.dest));
+	gulp
+		.src(minify.image.src)
+		.pipe($.changed(minify.image.dest))
+		.pipe($.imagemin())
+		.pipe(gulp.dest(minify.image.dest));
 	done();
 });
 
@@ -138,6 +156,7 @@ gulp.task("minify", function (done) {
 gulp.task("build", function (done) {
 	gulp
 		.src(build.sass.src)
+		.pipe($.diffBuild())
 		.pipe($.plumber({ errorHandler: $.notify.onError("Error: <%= error.message %>") }))
 		.pipe($.sassGlob())
 		.pipe($.sass())
