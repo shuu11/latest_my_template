@@ -32,6 +32,7 @@ const copy = {
 
 //  minify
 const minify = {
+	change: paths.src + "/*.html",
 	content: [paths.src + "/*.html", paths.src + "/js/**/*.js"],
 
 	css: {
@@ -102,7 +103,7 @@ gulp.task("copy", function (done) {
 gulp.task("minify", function (done) {
 	gulp
 		.src(minify.css.src)
-		.pipe($.changed(minify.css.dest))
+		.pipe($.changed(minify.change))
 		.pipe($.plumber())
 		.pipe($.purgecss({ content: minify.content }))
 		.pipe($.cleanCss())
@@ -110,7 +111,7 @@ gulp.task("minify", function (done) {
 
 	gulp
 		.src(minify.fontawesome.src)
-		.pipe($.changed(minify.fontawesome.dest))
+		.pipe($.changed(minify.change))
 		.pipe($.plumber())
 		.pipe($.purgecss({ content: minify.content }))
 		.pipe($.cleanCss())
@@ -118,7 +119,7 @@ gulp.task("minify", function (done) {
 
 	gulp
 		.src(minify.swiper.src)
-		.pipe($.changed(minify.swiper.dest))
+		.pipe($.changed(minify.change))
 		.pipe($.plumber())
 		.pipe($.purgecss({ content: minify.content }))
 		.pipe($.cleanCss())
@@ -126,7 +127,7 @@ gulp.task("minify", function (done) {
 
 	gulp
 		.src(minify.tailwind.src)
-		.pipe($.changed(minify.tailwind.dest))
+		.pipe($.changed(minify.change))
 		.pipe($.plumber())
 		.pipe(
 			$.purgecss({
