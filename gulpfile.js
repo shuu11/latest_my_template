@@ -60,7 +60,7 @@ const minify = {
 	},
 
 	image: {
-		src: paths.src + "/image/**/*.{png,jpg,JPG,gif,svg}",
+		src: paths.src + "/image/**/*.{png,jpg,JPG,gif,svg,ico}",
 		dest: paths.dist + "/image",
 	},
 };
